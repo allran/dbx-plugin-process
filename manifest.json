@@ -1,0 +1,185 @@
+{
+  "$schema": "https://raw.githubusercontent.com/t8y2/dbx/main/plugins/manifest.schema.json",
+  "manifest_version": 1,
+  "id": "io.dbx.process",
+  "name": "Process Manager",
+  "version": "0.1.0",
+  "publisher": "alan",
+  "description": "Browse and manage local and remote OS processes.",
+  "icon": "assets/plugin.svg",
+  "engines": {
+    "dbx": ">=0.5.68",
+    "host_api": "1"
+  },
+  "permissions": ["host.workbench", "host.events"],
+  "entrypoints": {
+    "backend": {
+      "protocol_versions": [1],
+      "transport": "stdio-jsonl",
+      "executable": "bin/dbx-plugin-process"
+    },
+    "ui": {
+      "root": "ui",
+      "entry": "ui/index.html"
+    }
+  },
+  "contributions": [
+    {
+      "type": "connection-provider",
+      "id": "io.dbx.process.connection",
+      "label": "Remote Host",
+      "icon": "assets/plugin.svg",
+      "database_type": "process",
+      "description": "SSH host for remote process management.",
+      "fields": [
+        {
+          "key": "display_name",
+          "label": "Connection name",
+          "type": "text",
+          "default": "Remote Host",
+          "binding": "name",
+          "required": true
+        },
+        {
+          "key": "host",
+          "label": "Host",
+          "type": "text",
+          "default": "localhost",
+          "binding": "host",
+          "required": true
+        },
+        {
+          "key": "port",
+          "label": "Port",
+          "type": "number",
+          "default": 22,
+          "binding": "port",
+          "required": true
+        },
+        {
+          "key": "username",
+          "label": "Username",
+          "type": "text",
+          "binding": "username",
+          "required": true
+        },
+        {
+          "key": "password",
+          "label": "Password",
+          "type": "password",
+          "binding": "password",
+          "required": false,
+          "description": "Optional when a private key is provided."
+        },
+        {
+          "key": "private_key_path",
+          "label": "Private key",
+          "type": "text",
+          "binding": "config",
+          "required": false,
+          "description": "OpenSSH / PEM private key. Desktop picks a file path; browser uploads key content.",
+          "picker": {
+            "kind": "file",
+            "accept": [".pem", ".key", "application/x-pem-file"],
+            "content_field": "private_key"
+          }
+        },
+        {
+          "key": "private_key",
+          "label": "Private key content",
+          "type": "password",
+          "binding": "secret",
+          "required": false,
+          "description": "Filled automatically when a key file is uploaded in the browser."
+        },
+        {
+          "key": "private_key_passphrase",
+          "label": "Key passphrase",
+          "type": "password",
+          "binding": "secret",
+          "required": false,
+          "description": "Passphrase for an encrypted private key. Falls back to Password when empty."
+        },
+        {
+          "key": "connect_timeout_secs",
+          "label": "Connect timeout (seconds)",
+          "type": "number",
+          "default": 30,
+          "binding": "config",
+          "required": false
+        }
+      ],
+      "workbench": "io.dbx.process.workbench",
+      "capabilities": ["test", "connect", "disconnect"]
+    },
+    {
+      "type": "workbench",
+      "id": "io.dbx.process.workbench",
+      "label": "Process Manager",
+      "description": "List, search, and terminate OS processes.",
+      "icon": "assets/plugin.svg"
+    },
+    {
+      "type": "command",
+      "id": "io.dbx.process.open",
+      "label": "Open Process Manager",
+      "action": {
+        "type": "open-workbench",
+        "workbench": "io.dbx.process.workbench",
+        "presentation": "tab",
+        "reuse": "singleton",
+        "instance_key": "process:local",
+        "context": { "scope": "local" }
+      }
+    },
+    {
+      "type": "menus",
+      "id": "io.dbx.process.menus",
+      "items": [
+        {
+          "location": "commandPalette",
+          "command": "io.dbx.process.open",
+          "group": "navigation",
+          "order": 40
+        },
+        {
+          "location": "appToolbar",
+          "command": "io.dbx.process.open",
+          "group": "navigation",
+          "order": 40,
+          "default_visible": true
+        }
+      ]
+    }
+  ],
+  "localizations": {
+    "zh-CN": {
+      "name": "进程管理",
+      "description": "浏览并管理本机与远程主机上的操作系统进程。",
+      "contributions": {
+        "io.dbx.process.connection": {
+          "label": "远程主机",
+          "description": "用于远程进程管理的 SSH 主机。",
+          "fields": {
+            "display_name": { "label": "连接名称" },
+            "host": { "label": "主机" },
+            "port": { "label": "端口" },
+            "username": { "label": "用户名" },
+            "password": { "label": "密码" },
+            "private_key_path": { "label": "私钥" },
+            "private_key": { "label": "私钥内容" },
+            "private_key_passphrase": { "label": "私钥口令" },
+            "connect_timeout_secs": { "label": "连接超时（秒）" }
+          }
+        },
+        "io.dbx.process.workbench": {
+          "label": "进程管理",
+          "description": "本机列出、搜索并结束操作系统进程。"
+        },
+        "io.dbx.process.open": {
+          "label": "打开进程管理"
+        }
+      }
+    }
+  }
+}

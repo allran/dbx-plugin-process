@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Process Manager">
+  <rect width="64" height="64" rx="14" fill="#0f766e"/>
+  <rect x="14" y="16" width="36" height="32" rx="4" fill="#fff" opacity=".96"/>
+  <rect x="18" y="22" width="10" height="3" rx="1.5" fill="#0f766e"/>
+  <rect x="18" y="28" width="18" height="3" rx="1.5" fill="#0f766e" opacity=".75"/>
+  <rect x="18" y="34" width="14" height="3" rx="1.5" fill="#0f766e" opacity=".55"/>
+  <rect x="18" y="40" width="22" height="3" rx="1.5" fill="#0f766e" opacity=".35"/>
+  <circle cx="44" cy="24" r="4" fill="#14b8a6"/>
+</svg>

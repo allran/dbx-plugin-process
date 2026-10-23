@@ -1,0 +1,39 @@
+[package]
+name = "dbx-plugin-process"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+rust-version = "1.91"
+
+[workspace]
+
+[dependencies]
+base64 = "0.22"
+dbx-plugin-sdk = { version = "0.1.0" }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "ico", "gif", "bmp"] }
+# Drop default `flate2` + `aws-lc-rs`; use `ring` (smaller) and keep `rsa` for common keys.
+russh = { version = "0.64", default-features = false, features = ["ring", "rsa"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# 0.39+ needs rustc 1.95; 0.38 is the newest line that builds on rustc 1.91.
+sysinfo = "0.38"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "io-util"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+# win-icon-extractor 0.3 depends on windows ^0.61 — do not bump past that yet.
+win-icon-extractor = { version = "0.3", default-features = false }
+windows = { version = "0.61", features = [
+  "Win32_Foundation",
+  "Win32_System_Diagnostics_ToolHelp",
+] }
+
+# Keep plugin binaries close to the host app's size: default release settings
+# leave ~20MB of symbols and unoptimized generic code in an OpenDAL-sized backend.
+# panic stays "unwind" so the sidecar protocol can report panics as errors.
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1

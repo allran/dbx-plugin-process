@@ -1,0 +1,9 @@
+/dist/
+/node_modules/
+/.dbx-dev/
+.dbx-repository-signing-key.env
+.DS_Store
+*.log
+/store-pr/
+/backend/target/
+/backend/.cargo/
