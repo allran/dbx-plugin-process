@@ -7,7 +7,7 @@
   "source": "https://github.com/allran/dbx-plugin-process",
   "homepage": "https://github.com/allran/dbx-plugin-process",
   "license": "Apache-2.0",
-  "releaseNotes": "Initial framework: local process list/kill, remote connection scaffold.",
+  "releaseNotes": "Initial release: local process list/search/kill with confirmation, ports and protected processes, remote SSH via DBX tunnel (password or private key).",
   "localizations": {
     "zh-CN": {
       "name": "进程管理",
