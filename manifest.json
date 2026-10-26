@@ -3,7 +3,7 @@
   "manifest_version": 1,
   "id": "io.dbx.process",
   "name": "Process Manager",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "alan",
   "description": "Browse and manage local and remote OS processes.",
   "icon": "assets/plugin.svg",
@@ -11,7 +11,7 @@
     "dbx": ">=0.5.68",
     "host_api": "1"
   },
-  "permissions": ["host.workbench", "host.events"],
+  "permissions": ["host.workbench", "host.events", "host.binary"],
   "entrypoints": {
     "backend": {
       "protocol_versions": [1],

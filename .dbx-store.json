@@ -3,11 +3,11 @@
   "description": "Browse, search, and terminate local and remote OS processes.",
   "icon": "assets/plugin.svg",
   "tags": ["process", "system", "workbench"],
-  "permissions": ["host.workbench", "host.events"],
+  "permissions": ["host.workbench", "host.events", "host.binary"],
   "source": "https://github.com/allran/dbx-plugin-process",
   "homepage": "https://github.com/allran/dbx-plugin-process",
   "license": "Apache-2.0",
-  "releaseNotes": "Initial release: local process list/search/kill with confirmation, ports and protected processes, remote SSH via DBX tunnel (password or private key).",
+  "releaseNotes": "Declare host.binary for process kill, local helper spawn (lsof/plutil), and remote SSH command execution.",
   "localizations": {
     "zh-CN": {
       "name": "进程管理",
